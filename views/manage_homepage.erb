@@ -1,0 +1,45 @@
+<h2><%= @homepage.title %></h2>
+
+<ul class="manage_top_menu">
+	<li class="add_feed"><a href="#">Add feed</a></li>
+	<li class="add_slot"><a href="#">Add slot</a></li>
+	<li>Get slot code/generate homepage template</li>
+</ul>
+
+<div id="feeds_menu" style="clear:left;">
+		<ul class="feeds_menu">
+			<form method="post" action="/hpfeed/new">
+			<input type="hidden" name="homepage_feed[homepage_id]" value="<%= @homepage.id %>">
+			<% @feeds.each do |feed| %>
+				<li><input type="checkbox" name="homepage_feed[feed_ids][]" value="<%= feed.id %>"> <%= feed.title %></li>
+			<% end %>
+			<input name="commit" type="submit" value="Add" />
+			</form>
+		</ul>
+		
+		<div class="slot_form">
+			<form method="post" action="/hpslot/new">
+			<input type="hidden" name="homepage_slot[homepage_id]" value="<%= @homepage.id %>">
+			<p>Slot Label <input type="text" name="homepage_slot[label]"></p>
+			<input name="commit" type="submit" value="Add" />
+			</form>
+		</div>
+</div>
+
+<div id="manage_body">
+
+<div id="feed_menu">
+
+</div>
+
+<% if @feed_prompt %>
+	<p>This homepage doesn't have any feeds yet. Add one!</p>
+<% else %>
+	<ul>
+		<% @hpfeeds.each do |feed| %>
+			<li><%= feed.title %></li>
+		<% end %>
+	</ul>
+<% end %>
+
+</div>

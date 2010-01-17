@@ -1,0 +1,95 @@
+/*
+Reset CSS
+Copyright (c) 2009, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 2.8.0r4
+*/
+html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:inherit;font-weight:inherit;}del,ins{text-decoration:none;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:baseline;}sub{vertical-align:baseline;}legend{color:#000;}input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}input,button,textarea,select{*font-size:100%;}
+/*
+Homer CSS
+by Al Shaw
+*/
+
+/* big stuff */
+
+body {
+	font-family:"Helvetica Neue",helvetica,arial,sans-serif;
+	margin:0 auto;
+	height: 100%;
+	background:f0f0f0;
+	}
+
+#page { 
+	width:960px;
+	height: 100%
+	text-align:left;
+	padding: 0 30px 0 30px;
+	}
+
+#foot {
+	clear:left;
+	color:#dedede;
+	background: #fff;
+	padding:2px;
+	font-size:14px;
+	font-weight:bold;
+	margin-top:15px;
+	border-top:1px solid #dedede;
+	}
+
+h2 {
+	font-size:18px;
+	font-weight:bold;
+	padding: 5px 0 5px 0;
+	}
+
+h3 {
+	font-size:14px;
+	font-weight:bold;
+	padding: 5px 0 5px 0;
+	}
+
+a {
+	color:#999999;
+	text-decoration:none;
+	}
+
+a:hover {
+	text-decoration:underline;
+	}
+
+/* ui elements */
+
+#manage_feed_menu {
+	/*display:none;*/
+	}
+#manage_body {
+	clear:left;
+	padding: 20px 0 20px 0;
+	}
+	
+ul.manage_top_menu li {
+	list-style-type:none;
+	float:left;
+	padding: 10px;
+	margin-right:2px;
+	background:#f0f0f0;
+	}
+
+#feeds_menu {
+	background:#999999;
+	color:#fff;
+	}
+ul.feeds_menu, .slot_form {
+	display:none;
+	}
+ul.feeds_menu li {
+	padding:10px 10px 10px 10px;
+}
+#feeds_menu input[type=submit] {
+	border: 1px solid #fff;
+	color:#fff;
+	}
+
+
