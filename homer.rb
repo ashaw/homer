@@ -13,6 +13,10 @@ enable :sessions
 
 # controller
 
+#
+# pages
+#
+
 get '/' do
 	@homepages = Homepage.find(:all)
 	@feeds = Feed.find(:all)
@@ -41,6 +45,18 @@ get '/:id' do
 	
 		erb :manage_homepage
 end
+
+get '/feeds/:id' do
+	@feed = Feed.find(params[:id])
+	@url = @feed.url	
+	@payload = Homer.get_feed(@url)
+	
+	erb :feed, :layout => false
+end
+
+#
+# creating stuff
+#
 
 get '/homepage/new' do
 	erb :new_homepage

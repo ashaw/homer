@@ -1,4 +1,5 @@
 require 'erb'
+require 'open-uri'
 require 'activerecord'
 require 'feedme' #for atom/rss parsing
 
@@ -16,6 +17,12 @@ class Homer
 			`rake homer:init`
 			"reload for your fresh db"
 		end
+	end
+	
+	def self.get_feed(url)
+		file = open(url).read
+		feed = FeedMe.parse(file)
+		entries = feed.entries
 	end
 
 end

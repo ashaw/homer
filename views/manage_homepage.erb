@@ -37,7 +37,7 @@
 <% else %>
 	<ul>
 		<% @hpfeeds.each do |feed| %>
-			<li><%= feed.title %></li>
+			<li><a href="/feeds/<%= feed.id %>">&#x267B;</a> <%= feed.title %></li>
 		<% end %>
 	</ul>
 <% end %>

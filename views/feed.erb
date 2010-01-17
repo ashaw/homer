@@ -1,0 +1,6 @@
+<!-- feed -->
+<ul>
+<% @payload[0..5].each do |entry| %>
+	<li><%= entry.title %></li>
+<% end %>
+</ul>
