@@ -61,6 +61,11 @@ a:hover {
 
 /* ui elements */
 
+#loading {
+	display:none;
+	}
+
+/* manage homepage menus */
 #manage_feed_menu {
 	/*display:none;*/
 	}
@@ -76,7 +81,6 @@ ul.manage_top_menu li {
 	margin-right:2px;
 	background:#f0f0f0;
 	}
-
 #feeds_menu {
 	background:#999999;
 	color:#fff;
@@ -91,5 +95,42 @@ ul.feeds_menu li {
 	border: 1px solid #fff;
 	color:#fff;
 	}
+li.pubbutton {
+	background: #990000 !important;
+	color:#fff;
+	}
 
+/* manage homepage workspace */
 
+#feed_list {
+	float:left;
+	width:175px;
+	padding-right:20px;
+	}
+	
+#story_list {
+	float:left;
+	width:750px;
+	}
+	
+#story_list ul li {
+	line-height:16px;
+	clear:left;
+	}
+#story_list ul li select {
+	float:left;
+	padding-right:10px;
+	}
+#story_list ul li input[type=text] {
+	width:500px;
+	}
+.story_body {
+	display:none;
+	}
+.story_body textarea {
+	height:300px;
+	width:500px;
+	}
+.story_body text {
+	width:500px;
+	}

@@ -5,6 +5,15 @@
 
 $(document).ready(function() {
 	
+	//ajax spinner
+	$("#loading")
+	.ajaxStart(function() {	
+		$(this).show();
+	})
+	.ajaxStop(function() {
+		$(this).hide()
+	});
+	
 	function clearHomepageMenu() {
 		$("#feeds_menu > *").hide()
 	}
@@ -20,6 +29,7 @@ $(document).ready(function() {
 		return false;
 	});
 
+
 // do this statically for now
 	
 // 	$("ul.feeds_menu li").each(function() {
@@ -32,4 +42,19 @@ $(document).ready(function() {
 // 			return false;
 // 			});
 // 	});
-});
+
+	// refresh feeds
+	
+		$("#feed_list ul li a").each(function() {
+			$(this).click(function() {
+				var ids = $(this).attr('class').split(' ');
+				var hpid = ids[0]
+				var fid = ids[1]
+				$.get("/feeds/"+hpid+"/"+fid, function(newstories) {
+					$("#story_list ul#fresh_stories").prepend(newstories);
+				});
+			return false;
+			});
+		});
+		
+}); //dom ready

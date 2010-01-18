@@ -13,9 +13,9 @@ enable :sessions
 
 # controller
 
-#
-# pages
-#
+##
+# showing stuff
+##
 
 get '/' do
 	@homepages = Homepage.find(:all)
@@ -46,17 +46,19 @@ get '/:id' do
 		erb :manage_homepage
 end
 
-get '/feeds/:id' do
-	@feed = Feed.find(params[:id])
+get '/feeds/:hpid/:fid' do
+	@homepage = Homepage.find(params[:hpid])
+	@feed = Feed.find(params[:fid])
 	@url = @feed.url	
 	@payload = Homer.get_feed(@url)
 	
+	@slots = @homepage.slots.find(:all)
 	erb :feed, :layout => false
 end
 
-#
+##
 # creating stuff
-#
+##
 
 get '/homepage/new' do
 	erb :new_homepage
@@ -103,6 +105,25 @@ post '/hpslot/new' do
 		redirect "/#{@homepage_id}"
 	end
 end
+
+post '/story/new' do
+	@stories = params[:story]
+	
+	@stories.each do |story|
+		if not story.slot_id.nil?
+			Story.new(story)
+			Story.save!
+		end
+	end
+	
+	#if @story.save
+		redirect back
+	#end
+end
+
+##
+# tidying up stuff
+##
 
 not_found do
 	'404. go <a href="/">home</a>'

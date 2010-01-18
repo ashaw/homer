@@ -4,6 +4,7 @@
 	<li class="add_feed"><a href="#">Add feed</a></li>
 	<li class="add_slot"><a href="#">Add slot</a></li>
 	<li>Get slot code/generate homepage template</li>
+	<li class="pubbutton">Publish Homepage</li>
 </ul>
 
 <div id="feeds_menu" style="clear:left;">
@@ -35,11 +36,27 @@
 <% if @feed_prompt %>
 	<p>This homepage doesn't have any feeds yet. Add one!</p>
 <% else %>
+	<div id="feed_list">
+		
 	<ul>
 		<% @hpfeeds.each do |feed| %>
-			<li><a href="/feeds/<%= feed.id %>">&#x267B;</a> <%= feed.title %></li>
+			<li><a href="/feeds/<%= @homepage.id %>/<%= feed.id %>" class="<%= @homepage.id %> <%= feed.id %>">&#x267B;</a> <%= feed.title %></li>
 		<% end %>
 	</ul>
+	</div>
+	
+	<div id="story_list">
+	<ul id="assigned_stories">
+	<!-- assigned stories injected here -->
+	</ul>
+	
+	<form method="POST" action="/story/new">
+	<ul id="fresh_stories">
+	<!-- fresh stories injected here -->
+	</ul>
+	<input name="commit" type="submit" value="Save" />
+	</form>
+	</div>
 <% end %>
 
 </div>

@@ -1,6 +1,26 @@
+<script type="text/javascript">
+$(document).ready(function() {
+		$("#story_list ul#fresh_stories li a.showbody").each(function() {
+			$(this).click(function() {
+				$(this).next(".story_body").toggle();
+				return false;
+			});
+		});
+});
+</script>
 <!-- feed -->
-<ul>
-<% @payload[0..5].each do |entry| %>
-	<li><%= entry.title %></li>
+<% @payload[0..5].each_with_index do |entry,index| %>
+	<li>
+		<select name="story[slot_id]">
+			<option value=""></option>
+			<% @slots.each do |slot| %>
+			<option value="<%= slot.id %>"><%= slot.label %></option>
+			<% end %>
+		</select> 
+		 <input type="text" name="story[title]" value="<%= entry.title %>"> <a href="#" class="showbody">&darr;</a>
+		 <div class="story_body">
+		 	<textarea name="story[body]"><%= entry.content.content %></textarea>
+		 </div>
+	</li>
 <% end %>
-</ul>
+
