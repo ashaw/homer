@@ -13,30 +13,43 @@ by Al Shaw
 
 /* big stuff */
 
+html {
+	background:#f0f0f0;
+	}
+
 body {
 	font-family:"Helvetica Neue",helvetica,arial,sans-serif;
-	margin:0 auto;
 	height: 100%;
-	background:f0f0f0;
+	background:#fff;
+	border-top:8px solid #000;
+	padding-top:0;
 	}
 
 #page { 
-	width:960px;
-	height: 100%
+	width:960px;		
+	margin:0 auto;
+	height: 100%;
 	text-align:left;
 	padding: 0 30px 0 30px;
 	}
 
+	
 #foot {
 	clear:left;
-	color:#dedede;
-	background: #fff;
-	padding:2px;
-	font-size:14px;
-	font-weight:bold;
-	margin-top:15px;
-	border-top:1px solid #dedede;
+	text-align:left;
+	border-top:1px solid #000;
+	background:#f0f0f0;
+	padding-top:0.2%;
 	}
+
+#foot p {
+	font-family:"Century Schoolbook",Georgia,Times,serif;
+	font-size:12px;
+	width:960px;
+	margin: 0 auto;
+	text-align:left;
+	padding: 0 30px 0 30px;
+}
 
 h2 {
 	font-size:18px;
@@ -59,10 +72,40 @@ a:hover {
 	text-decoration:underline;
 	}
 
+#top {
+	float:left;
+	}
+#middle {
+	clear:left;
+	}
+
+img.logo {
+	margin-top:0px;
+	border-bottom:1px solid #000;
+	z-index:2;
+	}
+img.logo:hover {
+	/*border-left:2px solid #000; */
+	}
+
+/* home */
+
+#home_menus .list {
+	float:left;
+	padding-right:20px;
+	width:200px;
+	margin-bottom:20px;
+	}
+
 /* ui elements */
 
 #loading {
 	display:none;
+	float:left;
+	z-index:99;
+	margin-left:-60px;
+	background:#fff;
+	padding:13px;
 	}
 
 /* manage homepage menus */
@@ -78,8 +121,9 @@ ul.manage_top_menu li {
 	list-style-type:none;
 	float:left;
 	padding: 10px;
-	margin-right:2px;
-	background:#f0f0f0;
+	margin-right:4px;
+	background:#fff;
+	border:1px solid #333333;
 	}
 #feeds_menu {
 	background:#999999;
@@ -96,8 +140,8 @@ ul.feeds_menu li {
 	color:#fff;
 	}
 li.pubbutton {
-	background: #990000 !important;
-	color:#fff;
+	background: #FFEEEE !important;
+	color:#000;
 	}
 
 /* manage homepage workspace */

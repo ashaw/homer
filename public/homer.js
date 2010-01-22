@@ -5,13 +5,18 @@
 
 $(document).ready(function() {
 	
+	//footer stuff
+	var winheight = $(document).height()
+	winheight = winheight * .95
+	$("#page").css("height",winheight);
+	
 	//ajax spinner
 	$("#loading")
 	.ajaxStart(function() {	
-		$(this).show();
+		$(this).fadeIn();
 	})
 	.ajaxStop(function() {
-		$(this).hide()
+		$(this).fadeOut()
 	});
 	
 	function clearHomepageMenu() {
