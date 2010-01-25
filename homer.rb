@@ -42,7 +42,10 @@ get '/:id' do
 		else
 			@hpfeeds = @homepage.feeds.find(:all)
 		end
-	
+		
+		@assigned_stories = @homepage.slots.all.select {|q| q if (q.story) }
+		@slots = Slot.find(:all)
+		
 		erb :manage_homepage
 end
 
@@ -107,14 +110,21 @@ post '/hpslot/new' do
 end
 
 post '/story/new' do
-	@stories = params[:story]
-	
+	@stories = params[:story].values.collect {|story| Story.new(story)}
 	@stories.each do |story|
-		if not story.slot_id.nil?
-			Story.new(story)
-			Story.save!
+		if story.slot
+			story.save!
 		end
 	end
+
+get '/:hpid/template/generate' do
+	@homepage_id = params[:hpid]
+	@assigned_stories = @homepage.slots.all.select {|q| q if (q.story) }	
+	
+	Homer.generate(@assigned_stories)
+	
+	erb :generate_template
+end
 	
 	#if @story.save
 		redirect back

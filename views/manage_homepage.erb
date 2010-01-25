@@ -3,6 +3,7 @@
 <ul class="manage_top_menu">
 	<li class="add_feed"><a href="#">Add feed</a></li>
 	<li class="add_slot"><a href="#">Add slot</a></li>
+	<li><a href="#">Generate Template</a></li>
 	<li>Preview Homepage</li>
 	<li class="pubbutton">Publish Homepage</li>
 </ul>
@@ -46,8 +47,25 @@
 	</div>
 	
 	<div id="story_list">
-	<ul id="assigned_stories">
+	<% if @assigned_stories.length > 0 %>
+		<h2>Assigned Stories</h2>
+	<% end %>
+	<ul id="assigned_stories" <% if @assigned_stories.length > 0 %>class="assigned_active"<% end %>>
 	<!-- assigned stories injected here -->
+		<% @assigned_stories.each do |slot| %>
+			<li>
+					<select name="story[<%= slot.story.id %>][slot_id]">
+						<option value="<%= slot.id %>"><%= slot.label %></option>
+						<% @slots.reject {|s| s.id == slot.id }.each do |all_slot| %>
+						<option value="<%= all_slot.id %>[slot_id]"><%= all_slot.label %></option>
+						<% end %>
+					</select> 
+					 <input type="text" name="story[<%= slot.story.id %>][title]" value="<%= slot.story.title %>"> <a href="#" class="showbody">&darr;</a>
+					 <div class="story_body">
+						<textarea name="story[<%= slot.story.id %>][body]"><%= slot.story.body %></textarea>
+					 </div>
+				</li>
+		<% end %>
 	</ul>
 	
 	<form method="POST" action="/story/new">

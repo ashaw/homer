@@ -47,6 +47,8 @@ end
 class Story < ActiveRecord::Base
 	belongs_to :feed	
 	belongs_to :slot
+	
+	validates_presence_of :slot_id
 end
 
 

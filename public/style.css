@@ -178,3 +178,6 @@ li.pubbutton {
 .story_body text {
 	width:500px;
 	}
+ul.assigned_active {
+	border-bottom: 1px solid #000;
+	}
