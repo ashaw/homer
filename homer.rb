@@ -116,19 +116,17 @@ post '/story/new' do
 			story.save!
 		end
 	end
-
-get '/:hpid/template/generate' do
-	@homepage_id = params[:hpid]
-	@assigned_stories = @homepage.slots.all.select {|q| q if (q.story) }	
-	
-	Homer.generate(@assigned_stories)
-	
-	erb :generate_template
-end
 	
 	#if @story.save
 		redirect back
 	#end
+end
+
+get '/:hpid/template' do
+	@homepage_id = params[:hpid]
+	@assigned_stories = Homepage.find(@homepage_id).slots.all.select {|q| q if (q.story) }	
+		
+	erb :generate_template
 end
 
 ##
