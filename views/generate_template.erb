@@ -1,16 +1,24 @@
 <div id="template_editor">
-	<form method="POST" action="/generate/template/commit">
-		<textarea>
-
-			<%= Homer.template_top_wrapper(Homepage.find(@homepage_id)) %>
-			
-			<% Homer.template_slots(@assigned_stories).each do |slot| %>
-				<%= slot %>
-			<% end %>
-			
-			<%= Homer.template_bottom_wrapper %>
+	<form method="POST" action="/template/<%= params[:hpid] %>">
+	<input type="hidden" name="template[homepage]" value="<%= params[:hpid] %>">
+		<textarea name="template[html]">
+				
+<% if Homer.check_for_template(@homepage_id) == false %>
+	<%= Homer.template_top_wrapper(Homepage.find(@homepage_id)) %>
+	
+	<% Homer.template_slots(@assigned_stories).each do |slot| %>
+		<%= slot %>
+	<% end %>
+	
+	<%= Homer.template_bottom_wrapper %>
+<% else %>
+		<% Homer.check_for_template(@homepage_id).each do |line| %>
+			<%= line %>
+		<% end %>
+<% end %>
 		
 		</textarea>
+		<br />
 		<input name="commit" type="submit" value="Save" />
 	</form>
 </div>

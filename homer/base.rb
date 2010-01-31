@@ -1,4 +1,5 @@
 require 'erb'
+require 'ftools'
 require 'open-uri'
 require 'activerecord'
 require 'feedme' #for atom/rss parsing
@@ -24,28 +25,21 @@ class Homer
 		feed = FeedMe.parse(file)
 		entries = feed.entries
 	end
-	
-# 	def self.generate_template(homepage)
-# 		homepage_title = homepage.title
-# 		filename = homepage.title.dirify
-# 		f = File.new("#{filename}", "w+")
-# 	
-# 		
-# 	end
 
 	# boilerplate template code
 	
 	def self.template_top_wrapper(homepage)
 		top = <<-DOCUMENT
-			<!DOCTYPE html>
-			<html>
-			<head>
-			<title><%= #{homepage.title} %></title>
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+			<title><%= @homepage.title %></title>
 			</head>
 		
 			<body>
 				<div id="head">
-					<h1><%= #{homepage.title} %></h1>
+					<h1><%= @homepage.title %></h1>
 				</div>
 				<div id="mid">
 		DOCUMENT
@@ -81,18 +75,55 @@ class Homer
 		
 		ERB::Util::h(bottom)
 	end
+	
+	# if we already have a file, open it, and print in the textarea
+	# otherwise, go straight to the boilerplate
+	def self.check_for_template(homepage)
+		filename = Homepage.find(homepage).title.dirify
+		template = "#{SINATRA_ROOT}/templates/#{filename}.erb"
+		if File.exists?(template)
+			f = File.open(template, "r")
+			return f
+		else
+			return false
+		end
+	end
+	
+	# save template
+	def self.save_template(html,homepage)
+		filename = Homepage.find(homepage).title.dirify
+		template = "#{SINATRA_ROOT}/templates/#{filename}.erb"
+		f = File.new(template, "w+")
+			f.write html	
+		f.close
+	end
 
+   
+	#  then need to write a function that reads the file, unencodes the html, interprets the ERB, 
+	#  and "publishes" the raw html out to the filesystem.
+	
+	# not working
+	def self.publish_homepage(homepage)
+		@homepage = Homepage.find(homepage)
+		filename = @homepage.title.dirify
+		template = "#{SINATRA_ROOT}/templates/#{filename}.erb"
+		destination = @homepage.path
+		
+		
+		f = File.open(template)
+		@s = ""
+		
+		f.each do |line|
+			@s << line
+		end
+		
+		@s = ERB.new(@s).result #need to figure out how to pass @homepage
 
-#   now need to write a function that checks if the
-#   file exists. if it does, it opens the file and loads
-#   into the text area. otherwise, it loads in the boilerplate
-#   slot code. 
-#   
-#   also need to write a function to save textarea code to the file
-#   
-#   then need to write a function that reads the file, unencodes the html, interprets the ERB, 
-#   and "publishes" the raw html out to the filesystem.
-
+		published_file = File.new("#{destination}", "w+")
+		published_file.write(@s)
+		published_file.close
+		f.close
+	end
   
 end
 

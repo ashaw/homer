@@ -3,9 +3,9 @@
 <ul class="manage_top_menu">
 	<li class="add_feed"><a href="#">Add feed</a></li>
 	<li class="add_slot"><a href="#">Add slot</a></li>
-	<li><a href="/<%= @homepage.id %>/template/">Generate Template</a></li>
-	<li>Preview Homepage</li>
-	<li class="pubbutton">Publish Homepage</li>
+	<li><a href="template/<%= @homepage.id %>">Edit Template</a></li>
+	<li><a href="/homepage/<%= @homepage.id %>/preview" target="_blank">Preview Homepage</a></li>
+	<li class="pubbutton"><a href="/homepage/<%= @homepage.id %>/publish">Publish Homepage</a></li>
 </ul>
 
 <div id="feeds_menu" style="clear:left;">

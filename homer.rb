@@ -59,6 +59,19 @@ get '/feeds/:hpid/:fid' do
 	erb :feed, :layout => false
 end
 
+get '/homepage/:hpid/preview' do
+	@homepage = Homepage.find(params[:hpid])
+	filename = @homepage.title.dirify
+	template = "templates/#{filename}.erb"
+	f = File.open(template)
+	@s = ""
+		f.each do |line|
+			@s << line
+		end
+	
+	erb @s, :layout => false
+end
+
 ##
 # creating stuff
 ##
@@ -122,11 +135,28 @@ post '/story/new' do
 	#end
 end
 
-get '/:hpid/template' do
+get '/template/:hpid' do
 	@homepage_id = params[:hpid]
 	@assigned_stories = Homepage.find(@homepage_id).slots.all.select {|q| q if (q.story) }	
 		
 	erb :generate_template
+end
+
+post '/template/:hpid' do
+	@homepage = params[:template][:homepage]		
+	@html = params[:template][:html]
+	
+	Homer.save_template(@html,@homepage)
+	
+	redirect back
+end
+
+get '/homepage/:hpid/publish' do
+	@homepage = params[:hpid]
+	
+	Homer.publish_homepage(@homepage)
+	
+	redirect back
 end
 
 ##
