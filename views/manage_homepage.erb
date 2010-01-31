@@ -48,17 +48,18 @@
 	
 	<div id="story_list">
 	<% if @assigned_stories.length > 0 %>
-		<h2>Assigned Stories</h2>
 	<% end %>
 	<ul id="assigned_stories" <% if @assigned_stories.length > 0 %>class="assigned_active"<% end %>>
+	<form method="POST" action="/homepage/<%= @homepage.id %>/rearrange">
 	<!-- assigned stories injected here -->
 		<% @assigned_stories.each do |slot| %>
 			<li>
 					<select name="story[<%= slot.story.id %>][slot_id]">
 						<option value="<%= slot.id %>"><%= slot.label %></option>
 						<% @slots.reject {|s| s.id == slot.id }.each do |all_slot| %>
-						<option value="<%= all_slot.id %>[slot_id]"><%= all_slot.label %></option>
+						<option value="<%= all_slot.id %>"><%= all_slot.label %></option>
 						<% end %>
+						<option value=""></option><!-- blank -->
 					</select> 
 					 <input type="text" name="story[<%= slot.story.id %>][title]" value="<%= slot.story.title %>"> <a href="#" class="showbody">&darr;</a>
 					 <div class="story_body">
@@ -66,6 +67,8 @@
 					 </div>
 				</li>
 		<% end %>
+			<% if @assigned_stories.length > 0 %><input name="commit" type="submit" value="Save" /><% end %>
+		</form>
 	</ul>
 	
 	<form method="POST" action="/story/new">

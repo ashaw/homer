@@ -43,8 +43,8 @@ get '/:id' do
 			@hpfeeds = @homepage.feeds.find(:all)
 		end
 		
-		@assigned_stories = @homepage.slots.all.select {|q| q if (q.story) }
-		@slots = Slot.find(:all)
+		@assigned_stories = @homepage.slots.select {|q| q if (q.story) }
+		@slots = @homepage.slots
 		
 		erb :manage_homepage
 end
@@ -118,7 +118,7 @@ post '/hpslot/new' do
 	@slot = Slot.new(params[:homepage_slot])
 	
 	if @slot.save
-		redirect "/#{@homepage_id}"
+		redirect back
 	end
 end
 
@@ -133,6 +133,16 @@ post '/story/new' do
 	#if @story.save
 		redirect back
 	#end
+end
+
+post '/homepage/:hpid/rearrange' do
+	@homepage = Homepage.find(params[:hpid])
+	@stories = params[:story]
+	
+	Story.update(@stories.keys,@stories.values)
+
+	
+	redirect back
 end
 
 get '/template/:hpid' do

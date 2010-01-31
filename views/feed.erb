@@ -10,6 +10,10 @@ $(document).ready(function() {
 </script>
 <!-- feed -->
 <% @payload[0..5].each_with_index do |entry,index| %>
+	<% body = entry.content rescue nil %>
+	<% if body.nil? %>
+		<% body = entry.description %>
+	<% end %>
 	<li>
 		<select name="story[<%= index %>][slot_id]">
 			<option value=""></option>
@@ -19,7 +23,7 @@ $(document).ready(function() {
 		</select> 
 		 <input type="text" name="story[<%= index %>][title]" value="<%= entry.title %>"> <a href="#" class="showbody">&darr;</a>
 		 <div class="story_body">
-		 	<textarea name="story[<%= index %>][body]"><%= entry.content.content %></textarea>
+		 	<textarea name="story[<%= index %>][body]"><%= body %></textarea>
 		 </div>
 	</li>
 <% end %>

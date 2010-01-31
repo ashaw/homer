@@ -61,5 +61,11 @@ $(document).ready(function() {
 			return false;
 			});
 		});
-		
+
+		$("ul#assigned_stories li a.showbody").each(function() {
+			$(this).click(function() {
+				$(this).next(".story_body").toggle();
+				return false;
+			});
+		});		
 }); //dom ready

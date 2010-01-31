@@ -117,7 +117,7 @@ class Homer
 			@s << line
 		end
 		
-		@s = ERB.new(@s).result #need to figure out how to pass @homepage
+		@s = ERB.new(@s).result(binding) #need to figure out how to pass @homepage
 
 		published_file = File.new("#{destination}", "w+")
 		published_file.write(@s)
@@ -149,7 +149,7 @@ class Story < ActiveRecord::Base
 	belongs_to :feed	
 	belongs_to :slot
 	
-	validates_presence_of :slot_id
+	#validates_presence_of :slot_id
 end
 
 

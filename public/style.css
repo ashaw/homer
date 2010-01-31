@@ -178,8 +178,13 @@ li.pubbutton {
 .story_body text {
 	width:500px;
 	}
-ul.assigned_active {
+ul.assigned_active,ul#fresh_stories {
 	border-bottom: 1px solid #000;
+	padding:10px;
+	background:#f0f0f0;
+	}
+ul.fresh_stories {
+	background:#FFFFCC;
 	}
 
 /* template editor */
