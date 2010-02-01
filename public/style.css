@@ -183,7 +183,7 @@ ul.assigned_active,ul#fresh_stories {
 	padding:10px;
 	background:#f0f0f0;
 	}
-ul.fresh_stories {
+ul#fresh_stories {
 	background:#FFFFCC;
 	}
 

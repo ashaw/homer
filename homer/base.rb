@@ -99,10 +99,9 @@ class Homer
 	end
 
    
-	#  then need to write a function that reads the file, unencodes the html, interprets the ERB, 
-	#  and "publishes" the raw html out to the filesystem.
+	#  read the file, unencode the html, interpret the ERB, 
+	#  and "publishe" the raw html out to the filesystem.
 	
-	# not working
 	def self.publish_homepage(homepage)
 		@homepage = Homepage.find(homepage)
 		filename = @homepage.title.dirify
@@ -117,7 +116,7 @@ class Homer
 			@s << line
 		end
 		
-		@s = ERB.new(@s).result(binding) #need to figure out how to pass @homepage
+		@s = ERB.new(@s).result(binding)
 
 		published_file = File.new("#{destination}", "w+")
 		published_file.write(@s)
