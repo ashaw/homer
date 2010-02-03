@@ -5,7 +5,7 @@
 
 <ul>
 	<% @homepages.each do |homepage| %>
-		<li><a href="<%= homepage.id %>"><%= homepage.title %></a></li>
+		<li><a href="<%= homepage.id %>"><%= homepage.title %></a> <span class="edit">&#9746; &#9998;</span></li>
 	<% end %>
 		<li><a href="/homepage/new">+1</a></li>
 </ul>
@@ -15,7 +15,7 @@
 <h2>Your Feeds</h2>
 <ul>	
 	<% @feeds.each do |feed| %>
-	<li><a href="<%= feed.url %>"><%= feed.title %></a></li>
+	<li><a href="<%= feed.url %>"><%= feed.title %></a> <span class="edit">&#9746; &#9998;</span></li>
 	<% end %>
 	<li><a href="/feed/new">+1</a></li>
 </ul>

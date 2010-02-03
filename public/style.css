@@ -93,8 +93,12 @@ img.logo:hover {
 #home_menus .list {
 	float:left;
 	padding-right:20px;
-	width:200px;
+	width:350px;
 	margin-bottom:20px;
+	}
+#home_menus .list ul li {
+	padding-bottom:8px;
+	border-top:1px solid #cecece;
 	}
 
 /* ui elements */
@@ -105,7 +109,14 @@ img.logo:hover {
 	z-index:99;
 	margin-left:-60px;
 	background:#fff;
-	padding:13px;
+	padding:10px;
+	}
+
+.edit {
+	background: #FFFFCC;
+	padding:2px;
+	float:right;
+	display:block;
 	}
 
 /* manage homepage menus */
@@ -116,15 +127,26 @@ img.logo:hover {
 	clear:left;
 	padding: 20px 0 20px 0;
 	}
+h2#manage_homepage_title {
+	float:left;
+	font-size:35px;
+	margin-top:-8px;
+	letter-spacing:-2px;
+	}
+ul.manage_top_menu {
+	float:right;
+	}
 	
 ul.manage_top_menu li {
 	list-style-type:none;
 	float:left;
 	padding: 10px;
+	margin-top:1px;
 	margin-right:4px;
-	background:#fff;
-	border:1px solid #333333;
+	background:#f0f0f0;
+	-webkit-box-shadow:0 0 3px #cecece;
 	}
+
 #feeds_menu {
 	background:#999999;
 	color:#fff;
@@ -142,6 +164,7 @@ ul.feeds_menu li {
 li.pubbutton {
 	background: #FFEEEE !important;
 	color:#000;
+	margin-right:0 !important;
 	}
 
 /* manage homepage workspace */
@@ -153,7 +176,7 @@ li.pubbutton {
 	}
 	
 #story_list {
-	float:left;
+	float:right;
 	width:750px;
 	}
 	
@@ -180,9 +203,10 @@ li.pubbutton {
 	}
 ul.assigned_active,ul#fresh_stories {
 	border-bottom: 1px solid #000;
-	padding:10px;
+	padding:20px;
 	background:#f0f0f0;
 	}
+
 ul#fresh_stories {
 	background:#FFFFCC;
 	}
