@@ -144,22 +144,48 @@ ul.manage_top_menu li {
 	margin-top:1px;
 	margin-right:4px;
 	background:#f0f0f0;
+	-moz-box-shadow:0 0 3px #cecece;
 	-webkit-box-shadow:0 0 3px #cecece;
 	}
 
 #feeds_menu {
-	background:#999999;
-	color:#fff;
+	background:#fff;
+	color:#000;
+	padding:30px;
+	display:none;
+	-moz-box-shadow:0 0 10px #cecece;
+	-webkit-box-shadow:0 0 10px #cecece;
+	overflow:auto;
 	}
-ul.feeds_menu, .slot_form {
+#feeds_submen, .slot_form {
 	display:none;
 	}
+#feeds_submen ul, .slot_form ul {
+	float:left;
+	margin-right:30px;
+	}
 ul.feeds_menu li {
-	padding:10px 10px 10px 10px;
+	padding:padding-bottom:4px;
 }
-#feeds_menu input[type=submit] {
-	border: 1px solid #fff;
-	color:#fff;
+/* buttons */
+input[type=submit] {
+	border: 1px solid #cecece;
+	padding:5px;
+	color:#000;
+	background:#f0f0f0;
+	-moz-box-shadow: 0px 0px 5px #cecece;
+	-webkit-box-shadow: 0px 0px 5px #cecece;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	}
+input[type=submit]:hover {
+	-moz-box-shadow: 0px 0px 5px #000;
+	-webkit-box-shadow: 0px 0px 5px #000;
+	cursor:pointer;
+	}
+li.submit {
+	margin-top:8px;
+	line-height: 20px !important;
 	}
 li.pubbutton {
 	background: #FFEEEE !important;
@@ -173,6 +199,9 @@ li.pubbutton {
 	float:left;
 	width:175px;
 	padding-right:20px;
+	background:#f0f0f0;
+	padding:10px;
+	border-bottom:1px solid #000;
 	}
 	
 #story_list {
@@ -209,6 +238,9 @@ ul.assigned_active,ul#fresh_stories {
 
 ul#fresh_stories {
 	background:#FFFFCC;
+	}
+#fresh_stories_container {
+	display:none;
 	}
 
 /* template editor */

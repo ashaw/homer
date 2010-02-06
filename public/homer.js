@@ -25,12 +25,14 @@ $(document).ready(function() {
 
 	$("li.add_feed a").click(function() {
 		clearHomepageMenu();
-		$("ul.feeds_menu").toggle();
+		$("#feeds_menu").toggle();
+		$("#feeds_submen").show();
 		return false;
 	});
 	$("li.add_slot a").click(function() {
 		clearHomepageMenu();
-		$(".slot_form").toggle()
+		$("#feeds_menu").toggle();
+		$(".slot_form").show()
 		return false;
 	});
 
@@ -52,6 +54,7 @@ $(document).ready(function() {
 	
 		$("#feed_list ul li a").each(function() {
 			$(this).click(function() {
+				$("#fresh_stories_container").show();
 				var ids = $(this).attr('class').split(' ');
 				var hpid = ids[0]
 				var fid = ids[1]
@@ -67,5 +70,14 @@ $(document).ready(function() {
 				$(this).next(".story_body").toggle();
 				return false;
 			});
-		});		
+		});
+		
+	//destroy confirm
+	
+	$(".destroy").live('click', function(event) {
+		if ( confirm("Are you sure you want to delete this?") )
+			window.location.replace(this.attr('href'));
+		return false;
+	});
+
 }); //dom ready

@@ -131,7 +131,8 @@ end
 
 class Homepage < ActiveRecord::Base
 	has_and_belongs_to_many :feeds
-	has_many :slots
+	has_many :slots, :dependent => :destroy
+	
 end
 
 class Feed < ActiveRecord::Base

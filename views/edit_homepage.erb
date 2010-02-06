@@ -1,0 +1,7 @@
+<h2>Edit Homepage</h2>
+
+ 	<form action="/homepage/<%= @homepage.id %>/save" method="post">
+      <p>Give this homepage a name <input id="title" name="homepage[title]" size="30" type="text" value="<%= @homepage.title %>" /></p>
+      <p>Tell me where it should reside in the filesystem <input id="path" name="homepage[path]" size="30" type="text" value="<%= @homepage.path %>" /></p>
+      <input name="commit" type="submit" value="Save" />
+	</form>

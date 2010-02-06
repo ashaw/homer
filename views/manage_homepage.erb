@@ -1,30 +1,53 @@
 <h2 id="manage_homepage_title"><%= @homepage.title %></h2>
 
 <ul class="manage_top_menu">
-	<li class="add_feed"><a href="#">Add feed</a></li>
-	<li class="add_slot"><a href="#">Add slot</a></li>
-	<li><a href="template/<%= @homepage.id %>">Edit Template</a></li>
-	<li><a href="/homepage/<%= @homepage.id %>/preview" target="_blank">Preview Homepage</a></li>
-	<li class="pubbutton"><a href="/homepage/<%= @homepage.id %>/publish">Publish Homepage</a></li>
+	<li class="add_feed"><a href="#">Feeds</a></li>
+	<li class="add_slot"><a href="#">Slots</a></li>
+	<li><a href="template/<%= @homepage.id %>">Template</a></li>
+	<li><a href="/homepage/<%= @homepage.id %>/preview" target="_blank">Preview</a></li>
+	<li class="pubbutton"><a href="/homepage/<%= @homepage.id %>/publish">Publish</a></li>
 </ul>
 
 <div id="feeds_menu" style="clear:left;">
+	<div id="feeds_submen">
 		<ul class="feeds_menu">
 			<form method="post" action="/hpfeed/new">
 			<input type="hidden" name="homepage_feed[homepage_id]" value="<%= @homepage.id %>">
+			<li>
 			<% @feeds.each do |feed| %>
 				<li><input type="checkbox" name="homepage_feed[feed_ids][]" value="<%= feed.id %>"> <%= feed.title %></li>
 			<% end %>
-			<input name="commit" type="submit" value="Add" />
+			<li class="submit"><input name="commit" type="submit" value="Add" /></li>
 			</form>
 		</ul>
+			<ul class="feeds_menu">
+			<form method="post" action="/hpfeed/remove">
+			<input type="hidden" name="homepage_feed[homepage_id]" value="<%= @homepage.id %>">
+			<% @hpfeeds.each do |feed| %>
+				<li><input type="checkbox" name="homepage_feed[feed_ids][]" value="<%= feed.id %>"> <%= feed.title %></li>
+			<% end %>
+			<li class="submit"><input name="commit" type="submit" value="Remove" class="destroy" /></li>
+			</form>
+		</ul>
+	</div>
 		
 		<div class="slot_form">
+			<ul>
 			<form method="post" action="/hpslot/new">
 			<input type="hidden" name="homepage_slot[homepage_id]" value="<%= @homepage.id %>">
-			<p>Slot Label <input type="text" name="homepage_slot[label]"></p>
-			<input name="commit" type="submit" value="Add" />
+			<li>New Slot called: <input type="text" name="homepage_slot[label]"> <input name="commit" type="submit" value="Add" /></li>
 			</form>
+			</ul>
+		
+		<ul class="feeds_menu">
+			<form method="post" action="/hpslot/remove">
+			<input type="hidden" name="homepage_slot[homepage_id]" value="<%= @homepage.id %>">
+			<% @homepage.slots.each do |slot| %>
+				<li><input type="checkbox" name="homepage_slot[slot_ids][]" value="<%= slot.id %>"> <%= slot.label %></li>
+			<% end %>
+			<li class="submit"><input name="commit" type="submit" value="Remove" class="destroy" /></li>
+			</form>
+		</ul>
 		</div>
 </div>
 
@@ -67,16 +90,18 @@
 					 </div>
 				</li>
 		<% end %>
-			<% if @assigned_stories.length > 0 %><input name="commit" type="submit" value="Save" /><% end %>
+			<% if @assigned_stories.length > 0 %><li class="submit"><input name="commit" type="submit" value="Save" /></li><% end %>
 		</form>
 	</ul>
 	
+	<div id="fresh_stories_container">
 	<form method="POST" action="/story/new">
 	<ul id="fresh_stories">
 	<!-- fresh stories injected here -->
+	<li class="submit"><input name="commit" type="submit" value="Save" /></li>
 	</ul>
-	<input name="commit" type="submit" value="Save" />
 	</form>
+	</div>
 	</div>
 <% end %>
 

@@ -20,6 +20,7 @@ enable :sessions
 get '/' do
 	@homepages = Homepage.find(:all)
 	@feeds = Feed.find(:all)
+	@title = "Homer | Home"
 	
 	if @homepages.length > 0
 		erb :index
@@ -43,6 +44,7 @@ get '/:id' do
 			@hpfeeds = @homepage.feeds.find(:all)
 		end
 		
+		@title = "Homer | #{@homepage.title}"
 		@assigned_stories = @homepage.slots.select {|q| q if (q.story) }
 		@slots = @homepage.slots
 		
@@ -80,6 +82,30 @@ get '/homepage/new' do
 	erb :new_homepage
 end
 
+get '/homepage/:hpid/edit' do
+	@homepage = Homepage.find(params[:hpid])
+	
+	erb :edit_homepage
+end
+
+post '/homepage/:hpid/save' do
+	@homepage = Homepage.find(params[:hpid])
+	
+	if @homepage.update_attributes(params[:homepage])
+			redirect '/'
+	else
+		"error. try again?"
+	end
+end
+
+get '/homepage/:hpid/destroy' do
+	@homepage = Homepage.find(params[:hpid])
+	
+	@homepage.destroy
+	
+	redirect '/'
+end
+
 post '/homepage/new' do
 	@homepage = Homepage.new(params[:homepage])
 	
@@ -101,6 +127,30 @@ post '/feed/new' do
 	
 end
 
+get '/feed/:fid/edit' do
+	@feed = Feed.find(params[:fid])
+	
+	erb :edit_feed
+end
+
+post '/feed/:fid/save' do
+	@feed = Feed.find(params[:fid])
+	
+	if @feed.update_attributes(params[:feed])
+			redirect '/'
+	else
+		"error. try again?"
+	end
+end
+
+get '/feed/:fid/destroy' do
+	@feed = Feed.find(params[:fid])
+	
+	@feed.destroy
+	
+	redirect '/'
+end
+
 post '/hpfeed/new' do	
 	@homepage_id = params[:homepage_feed][:homepage_id]
 	@feeds = params[:homepage_feed][:feed_ids] || []
@@ -114,12 +164,38 @@ post '/hpfeed/new' do
 	#end
 end
 
+post '/hpfeed/remove' do	
+	@homepage_id = params[:homepage_feed][:homepage_id]
+	@feeds = params[:homepage_feed][:feed_ids] || []
+	
+	@feeds.each do |feed_id|
+		 Homepage.find(@homepage_id).feeds.delete(Feed.find(feed_id))
+	end
+	
+	#if @feeds.save
+		redirect "/#{@homepage_id}"
+	#end
+end
+
 post '/hpslot/new' do
 	@slot = Slot.new(params[:homepage_slot])
 	
 	if @slot.save
 		redirect back
 	end
+end
+
+post '/hpslot/remove' do
+	@homepage_id = params[:homepage_slot][:homepage_id]
+	@slots = params[:homepage_slot][:slot_ids] || []
+	
+	@slots.each do |slot_id|
+		 Slot.find(slot_id).destroy
+	end
+	
+	#if @feeds.save
+		redirect back
+	#end
 end
 
 post '/story/new' do
@@ -168,6 +244,12 @@ get '/homepage/:hpid/publish' do
 	
 	redirect back
 end
+
+##
+# deleting stuff
+##
+
+
 
 ##
 # tidying up stuff

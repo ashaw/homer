@@ -1,0 +1,7 @@
+<h2>Edit feed</h2>
+
+ 	<form action="/feed/<%= @feed.id %>/save" method="post">
+      <p>title <input id="title" name="feed[title]" size="30" type="text" value="<%= @feed.title %>" /></p>
+      <p>url <input id="url" name="feed[url]" size="30" type="text" value="<%= @feed.url %>" /></p>
+      <input name="commit" type="submit" value="Save" />
+	</form>
