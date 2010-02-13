@@ -10,10 +10,22 @@ $(document).ready(function() {
 </script>
 <!-- feed -->
 <% @payload[0..5].each_with_index do |entry,index| %>
+	<% title = entry.title.content rescue nil %>
+	<% if title.nil? %>
+		<% title = entry.title %>
+	<% end %>
+	
 	<% body = entry.content.content rescue nil %>
 	<% if body.nil? %>
 		<% body = entry.description %>
 	<% end %>
+
+	<% link = entry.link.href rescue nil %>
+	<% if link.nil? %>
+		<% link = entry.link %>
+	<% end %>
+		
+	
 	<li>
 		<select name="story[<%= @feed.id %><%= index %>][slot_id]">
 			<option value=""></option>
@@ -21,9 +33,10 @@ $(document).ready(function() {
 			<option value="<%= slot.id %>"><%= slot.label %></option>
 			<% end %>
 		</select> 
-		 <input type="text" name="story[<%= @feed.id %><%= index %>][title]" value="<%= entry.title %>"> <a href="#" class="showbody">&darr;</a>
+		 <input type="text" name="story[<%= @feed.id %><%= index %>][title]" value="<%= title %>"> <a href="#" class="showbody">&darr;</a>
 		 <div class="story_body">
 		 	<textarea name="story[<%= @feed.id %><%= index %>][body]"><%= body %></textarea>
+		 	<input type="text" name="story[<%= @feed.id %><%= index %>][permalink]" class="permalink" value ="<%= link %>">
 		 </div>
 	</li>
 <% end %>

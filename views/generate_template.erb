@@ -6,7 +6,7 @@
 <% if Homer.check_for_template(@homepage_id) == false %>
 	<%= Homer.template_top_wrapper(Homepage.find(@homepage_id)) %>
 	
-	<% Homer.template_slots(@assigned_stories).each do |slot| %>
+	<% Homer.template_slots(@slots).each do |slot| %>
 		<%= slot %>
 	<% end %>
 	

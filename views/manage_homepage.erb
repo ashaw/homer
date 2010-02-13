@@ -23,8 +23,10 @@
 			<ul class="feeds_menu">
 			<form method="post" action="/hpfeed/remove">
 			<input type="hidden" name="homepage_feed[homepage_id]" value="<%= @homepage.id %>">
-			<% @hpfeeds.each do |feed| %>
+			<% if @hpfeeds && @hpfeeds.length > 0 %>
+				<% @hpfeeds.each do |feed| %>
 				<li><input type="checkbox" name="homepage_feed[feed_ids][]" value="<%= feed.id %>"> <%= feed.title %></li>
+				<% end %>
 			<% end %>
 			<li class="submit"><input name="commit" type="submit" value="Remove" class="destroy" /></li>
 			</form>
@@ -87,6 +89,8 @@
 					 <input type="text" name="story[<%= slot.story.id %>][title]" value="<%= slot.story.title %>"> <a href="#" class="showbody">&darr;</a>
 					 <div class="story_body">
 						<textarea name="story[<%= slot.story.id %>][body]"><%= slot.story.body %></textarea>
+			 		 	<input type="text" name="story[<%= slot.story.id %>][permalink]" class="permalink" value ="<%= slot.story.permalink %>">
+
 					 </div>
 				</li>
 		<% end %>

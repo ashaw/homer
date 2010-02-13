@@ -6,9 +6,9 @@
 $(document).ready(function() {
 	
 	//footer stuff
-	var winheight = $(document).height()
-	winheight = winheight * .95
-	$("#page").css("height",winheight);
+// 	var winheight = $(document).height()
+// 	winheight = winheight * .95
+// 	$("#page").css("height",winheight);
 	
 	//ajax spinner
 	$("#loading")

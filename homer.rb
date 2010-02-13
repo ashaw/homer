@@ -68,10 +68,10 @@ get '/homepage/:hpid/preview' do
 	f = File.open(template)
 	@s = ""
 		f.each do |line|
-			@s << line
+			@s << ERB.new(line).result(binding) rescue nil
 		end
 	
-	erb @s, :layout => false
+	erb @s, :layout => :preview
 end
 
 ##
@@ -223,7 +223,7 @@ end
 
 get '/template/:hpid' do
 	@homepage_id = params[:hpid]
-	@assigned_stories = Homepage.find(@homepage_id).slots.all.select {|q| q if (q.story) }	
+	@slots = Homepage.find(@homepage_id).slots
 		
 	erb :generate_template
 end

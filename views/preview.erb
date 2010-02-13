@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Homer | Previewing <%= @homepage.title %></title>
+<style>
+#overlay {
+	position:fixed;
+	width:100%;
+	background:#000;
+	padding:10px;
+	opacity:.60;
+	top:0;
+}
+#overlay h1 {
+	color:#fff;
+	font-size:14px;
+	font-family:Helvetica;
+	font-weight:normal;
+}
+#overlay a {
+	color:#f0f0f0;
+}
+#overlay a:hover {
+	text-decoration:none;
+}
+#page {
+	margin-top:60px;
+}
+</style>
+
+</head>
+<body>
+<div id="overlay">
+<h1>Previewing <%= @homepage.title %> | <a href="/<%= @homepage.id %>">Manage</a> | <a href="/homepage/<%= @homepage.id %>/publish">Publish</a></h1>
+</div>
+
+<div id="page">
+<%= yield %>
+</div>
+</body>
+</html>

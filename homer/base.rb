@@ -47,10 +47,10 @@ class Homer
 		ERB::Util::h(top)
 	end
 
-	def self.template_slots(assigned_stories)		
-		slots = []
+	def self.template_slots(slots)		
+		wrapped_slots = []
 		
-		assigned_stories.each do |slot|
+		slots.each do |slot|
 			label = slot.label
 			wrapped_slot = <<-DOCUMENT
 				<div id="#{label.dirify}" class="slot">
@@ -59,9 +59,9 @@ class Homer
 							<p><%= @#{label.dirify}.story.body %></p>
 				</div>
 			DOCUMENT
-			slots << ERB::Util::h(wrapped_slot)
+			wrapped_slots << ERB::Util::h(wrapped_slot)
 		end
-		return slots
+		return wrapped_slots
 	end
 	
 	def self.template_bottom_wrapper
@@ -113,11 +113,9 @@ class Homer
 		@s = ""
 		
 		f.each do |line|
-			@s << line
+			@s << ERB.new(line).result(binding) rescue nil
 		end
 		
-		@s = ERB.new(@s).result(binding)
-
 		published_file = File.new("#{destination}", "w+")
 		published_file.write(@s)
 		published_file.close
@@ -127,12 +125,14 @@ class Homer
 end
 
 
+
+
 # models
 
 class Homepage < ActiveRecord::Base
 	has_and_belongs_to_many :feeds
 	has_many :slots, :dependent => :destroy
-	
+
 end
 
 class Feed < ActiveRecord::Base
