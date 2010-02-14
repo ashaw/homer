@@ -63,6 +63,7 @@ end
 
 get '/homepage/:hpid/preview' do
 	@homepage = Homepage.find(params[:hpid])
+	@title = "Homer | Previewing #{@homepage.title}"
 	filename = @homepage.title.dirify
 	template = "templates/#{filename}.erb"
 	f = File.open(template)
@@ -79,11 +80,15 @@ end
 ##
 
 get '/homepage/new' do
+	@title = "Homer | New Homepage"
+
 	erb :new_homepage
 end
 
 get '/homepage/:hpid/edit' do
 	@homepage = Homepage.find(params[:hpid])
+	@title = "Homer | Edit #{@homepage.title}"
+
 	
 	erb :edit_homepage
 end
@@ -115,6 +120,8 @@ post '/homepage/new' do
 end
 
 get '/feed/new' do
+	@title = "Homer | New Feed"
+
 	erb :new_feed
 end
 
@@ -129,6 +136,8 @@ end
 
 get '/feed/:fid/edit' do
 	@feed = Feed.find(params[:fid])
+	@title = "Homer | Edit #{@feed.title}"
+
 	
 	erb :edit_feed
 end
@@ -222,9 +231,25 @@ post '/homepage/:hpid/rearrange' do
 end
 
 get '/template/:hpid' do
-	@homepage_id = params[:hpid]
-	@slots = Homepage.find(@homepage_id).slots
-		
+	@homepage = Homepage.find(params[:hpid])
+	@slots = Homepage.find(@homepage.id).slots
+	@title = "Homer | Templating #{@homepage.title}"
+	@stock_code = ""
+	
+	if Homer.check_for_template(@homepage.id) == false
+		@stock_code << Homer.template_top_wrapper(@homepage.id)
+		Homer.template_slots(@slots).each do |slot|
+			@stock_code << slot
+		end
+		@stock_code << Homer.template_bottom_wrapper
+	else
+		Homer.check_for_template(@homepage.id).each do |line|
+			@stock_code << line
+		end
+	end
+	
+	@stock_code = @stock_code.strip
+	
 	erb :generate_template
 end
 
@@ -233,6 +258,13 @@ post '/template/:hpid' do
 	@html = params[:template][:html]
 	
 	Homer.save_template(@html,@homepage)
+	
+	redirect back
+end
+
+get '/template/:hpid/reset' do
+	@homepage = Homepage.find(params[:hpid])
+	Homer.reset_template(@homepage.id)
 	
 	redirect back
 end
@@ -257,4 +289,8 @@ end
 
 not_found do
 	'404. go <a href="/">home</a>'
+end
+
+error do
+	erb "Error: " + request.env['sinatra.error']
 end

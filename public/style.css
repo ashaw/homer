@@ -264,9 +264,28 @@ ul#fresh_stories {
 
 /* template editor */
 
+#template_editor {
+	margin-bottom:15px;
+	}
+	
 #template_editor textarea {
 	font-family:Monaco,Geneva,"Bitstream Vera Sans Mono",monospace;
 	font-size:12px;
-	width:900px;
+	width:945px;
 	height:500px;
+	}
+#template_editor input[type=submit] {
+	margin-top:10px;
+	width:100px;
+	}
+h3.template_root {
+	font-size:14px;
+	float:left;
+	margin-top:8px;
+	color:#333333;
+	padding:5px;
+	margin-left:15px;
+	}
+.template_reset {
+	font-weight:normal;
 	}

@@ -55,7 +55,7 @@ class Homer
 			wrapped_slot = <<-DOCUMENT
 				<div id="#{label.dirify}" class="slot">
 				<%  @#{label.dirify} = @homepage.slots.first(:conditions => {:label => "#{label}"}) %>
-							<h2><%= @#{label.dirify}.story.title %></h2>
+							<h2><a href="<%= @#{label.dirify}.story.permalink %>"><%= @#{label.dirify}.story.title %></a></h2>
 							<p><%= @#{label.dirify}.story.body %></p>
 				</div>
 			DOCUMENT
@@ -93,9 +93,18 @@ class Homer
 	def self.save_template(html,homepage)
 		filename = Homepage.find(homepage).title.dirify
 		template = "#{SINATRA_ROOT}/templates/#{filename}.erb"
-		f = File.new(template, "w+")
-			f.write html	
-		f.close
+		
+			f = File.new(template, "w+")
+				f.write html	
+			f.close
+	end
+	
+	#reset template
+	def self.reset_template(homepage)
+		filename = Homepage.find(homepage).title.dirify
+		template = "#{SINATRA_ROOT}/templates/#{filename}.erb"
+
+		f = File.delete(template)
 	end
 
    
@@ -110,6 +119,10 @@ class Homer
 		
 		
 		f = File.open(template)
+		
+		rescue Errno::ENOENT 
+					raise "you must <a href='/template/#{@homepage.id}'>generate a template</a> and save it before you can publish!"
+
 		@s = ""
 		
 		f.each do |line|

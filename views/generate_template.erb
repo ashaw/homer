@@ -1,22 +1,17 @@
+<h2 id="manage_homepage_title"><%= @homepage.title %></h2>
+<h3 class="template_root"><%= SINATRA_ROOT %>/templates/<%= @homepage.title.dirify %>.erb <span class="template_reset">[<a href="/template/<%= @homepage.id %>/reset" class="destroy">reset</a>]</span></h3>
+
+<ul class="manage_top_menu">
+	<li><a href="/<%= @homepage.id %>">Manage</a></li>
+	<li><a href="/homepage/<%= @homepage.id %>/preview" target="_blank">Preview</a></li>
+	<li class="pubbutton"><a href="/homepage/<%= @homepage.id %>/publish">Publish</a></li>
+</ul>
+
 <div id="template_editor">
 	<form method="POST" action="/template/<%= params[:hpid] %>">
 	<input type="hidden" name="template[homepage]" value="<%= params[:hpid] %>">
 		<textarea name="template[html]">
-				
-<% if Homer.check_for_template(@homepage_id) == false %>
-	<%= Homer.template_top_wrapper(Homepage.find(@homepage_id)) %>
-	
-	<% Homer.template_slots(@slots).each do |slot| %>
-		<%= slot %>
-	<% end %>
-	
-	<%= Homer.template_bottom_wrapper %>
-<% else %>
-		<% Homer.check_for_template(@homepage_id).each do |line| %>
-			<%= line %>
-		<% end %>
-<% end %>
-		
+				<%= @stock_code %>	
 		</textarea>
 		<br />
 		<input name="commit" type="submit" value="Save" />
