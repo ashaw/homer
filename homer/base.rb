@@ -51,7 +51,7 @@ class Homer
 		wrapped_slots = []
 		
 		slots.each do |slot|
-			label = slot.label
+			label = slot.label.gsub(/^(\d)/,'_\1') #numbers can't start instance vars
 			wrapped_slot = <<-DOCUMENT
 				<div id="#{label.dirify}" class="slot">
 				<%  @#{label.dirify} = @homepage.slots.first(:conditions => {:label => "#{label}"}) %>
@@ -109,7 +109,7 @@ class Homer
 
    
 	#  read the file, unencode the html, interpret the ERB, 
-	#  and "publishe" the raw html out to the filesystem.
+	#  and "publish" the raw html out to the filesystem.
 	
 	def self.publish_homepage(homepage)
 		@homepage = Homepage.find(homepage)
@@ -117,12 +117,13 @@ class Homer
 		template = "#{SINATRA_ROOT}/templates/#{filename}.erb"
 		destination = @homepage.path
 		
+		begin
+			f = File.open(template)
+			
+			rescue Errno::ENOENT 
+				raise "you must <a href='/template/#{@homepage.id}'>generate a template</a> and save it before you can publish!"
+		end
 		
-		f = File.open(template)
-		
-		rescue Errno::ENOENT 
-					raise "you must <a href='/template/#{@homepage.id}'>generate a template</a> and save it before you can publish!"
-
 		@s = ""
 		
 		f.each do |line|

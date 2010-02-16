@@ -1,14 +1,10 @@
-/* 	homer js
-* 	requires jQuery 1.4
-* 	by al shaw
+/*  homer js
+*   by al shaw
+*   requires jQuery 1.4
+* 	
 **/
 
 $(document).ready(function() {
-	
-	//footer stuff
-// 	var winheight = $(document).height()
-// 	winheight = winheight * .95
-// 	$("#page").css("height",winheight);
 	
 	//ajax spinner
 	$("#loading")
@@ -35,20 +31,6 @@ $(document).ready(function() {
 		$(".slot_form").show()
 		return false;
 	});
-
-
-// do this statically for now
-	
-// 	$("ul.feeds_menu li").each(function() {
-// 		var classes = $(this).attr('class').split(' ');	
-// 		var hpid = classes[0];
-// 		var fid = classes[1];
-// 		
-// 			$(this).click(function() {
-// 				$.post("/hpfeed/new", { hpid: hpid, fid: fid } );
-// 			return false;
-// 			});
-// 	});
 
 	// refresh feeds
 	
