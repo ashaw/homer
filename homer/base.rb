@@ -10,16 +10,7 @@ class Homer
 	def self.version
 		'0.1'
 	end
-	
-	def self.check_for_db
-		if File.exists?("#{SINATRA_ROOT}/db/homer.sqlite3")
-			"you're in business"
-		else
-			`rake homer:init`
-			"reload for your fresh db"
-		end
-	end
-	
+		
 	def self.get_feed(url)
 		file = open(url).read
 		feed = FeedMe.parse(file)

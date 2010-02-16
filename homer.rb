@@ -277,6 +277,7 @@ get '/homepage/:hpid/publish' do
 	redirect back
 end
 
+
 ##
 # deleting stuff
 ##
@@ -288,9 +289,13 @@ end
 ##
 
 not_found do
-	'404. go <a href="/">home</a>'
+	erb '<div class="error">404. go <a href="/">home(r)</a></div>'
 end
 
 error do
-	erb "Error: " + request.env['sinatra.error']
+	erb "<div class=\"error\">Error: " + request.env['sinatra.error'] + "</div>"
+end
+
+error ActiveRecord::StatementInvalid do
+	erb "<div class=\"error\">Homer can't find the database! This probably means you haven't created it yet. Run <code>rake homer:init</code> and restart Homer to get started.</div>"
 end
