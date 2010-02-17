@@ -42,12 +42,14 @@ class Homer
 		wrapped_slots = []
 		
 		slots.each do |slot|
-			label = slot.label.gsub(/^(\d)/,'_\1') #numbers can't start instance vars
+			label = slot.label
+			label_instance_var = label.dirify.gsub(/^(\d)/,'_\1') #numbers can't start instance vars
+
 			wrapped_slot = <<-DOCUMENT
 				<div id="#{label.dirify}" class="slot">
-				<%  @#{label.dirify} = @homepage.slots.first(:conditions => {:label => "#{label}"}) %>
-							<h2><a href="<%= @#{label.dirify}.story.permalink %>"><%= @#{label.dirify}.story.title %></a></h2>
-							<p><%= @#{label.dirify}.story.body %></p>
+				<%  @#{label_instance_var.dirify} = Ho.new(@homepage,'#{label}') %>
+							<h2><a href="<%= @#{label_instance_var}.url %>"><%= @#{label_instance_var}.title %></a></h2>
+							<p><%= @#{label_instance_var}.body %></p>
 				</div>
 			DOCUMENT
 			wrapped_slots << ERB::Util::h(wrapped_slot)
@@ -129,6 +131,33 @@ class Homer
   
 end
 
+# Ho is for templating in Homer
+# Usage:
+#  <% left = Ho.new(@homepage,'left') %>
+#   <%= left.title %>
+#   <%= left.body %>
+#   <%= left.url %>
+
+class Ho
+
+	def initialize(homepage,slot)
+		@homepage = Homepage.find(homepage)
+		@slot = @homepage.slots.first(:conditions => {:label => slot})
+	end
+	
+	def title 
+		@slot.story.title
+	end
+	
+	def body 
+		@slot.story.body
+	end
+	
+	def url
+		@slot.story.permalink
+	end
+	
+end
 
 
 
