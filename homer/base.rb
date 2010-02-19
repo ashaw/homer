@@ -182,8 +182,23 @@ end
 class Story < ActiveRecord::Base
 	belongs_to :feed	
 	belongs_to :slot
+	before_create :bump_slot
+
+	# bump_slot is a replacement for validates_uniqueness_of
+	# if checks to see if a story is already assigned to a desired slot
+	# and bumps it out in favor of your new story
+	def bump_slot
+		filled_slots = Slot.all.collect { |s| s.story }.collect { |q| q.slot_id rescue nil }.select { |v| v if not v.nil? }
+
+		slot = self.slot_id
+		if filled_slots.include?(slot)
+			bumped_story = Story.first(:conditions => {:slot_id => slot})
+			bumped_story.slot_id = nil
+			bumped_story.save!
+		end
 	
-	#validates_presence_of :slot_id
+	end
+
 end
 
 
