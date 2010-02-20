@@ -6,10 +6,8 @@
 
 require 'rubygems'
 require 'sinatra'
-require 'homer/base'
-require 'config'
-
-enable :sessions
+require File.dirname(__FILE__) + '/homer/base'
+require File.dirname(__FILE__) + '/config'
 
 # controller
 
@@ -65,7 +63,7 @@ get '/homepage/:hpid/preview' do
 	@homepage = Homepage.find(params[:hpid])
 	@title = "Homer | Previewing #{@homepage.title}"
 	filename = @homepage.title.dirify
-	template = "templates/#{filename}.erb"
+	template = "#{SINATRA_ROOT}/templates/#{filename}.erb"
 	f = File.open(template)
 	@s = ""
 		f.each do |line|
@@ -297,5 +295,5 @@ error do
 end
 
 error ActiveRecord::StatementInvalid do
-	erb "<div class=\"error\">Homer can't find the database! This probably means you haven't created it yet. Run <code>rake homer:init</code> and restart Homer to get started.</div>"
+	erb "<div class=\"error\">Homer can't find the database! This probably means you haven't created it yet. Quit homer and run <code>homer init</code> to get started.</div>"
 end

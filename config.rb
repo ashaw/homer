@@ -4,3 +4,8 @@ ActiveRecord::Base.establish_connection(
   :adapter => 'sqlite3',
   :database =>  "#{SINATRA_ROOT}/db/homer.sqlite3"
 )
+
+enable :sessions
+set :environment => :production
+
+ENV['RACK_ENV'] = "production"

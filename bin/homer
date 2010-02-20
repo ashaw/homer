@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+require File.dirname(__FILE__) + '/../homer'
+
+HELP = <<DOCUMENT
+
+== HOMER #{Homer.version}
+== Homer makes homepages.
+
+homer init   set up new Homer database
+homer run    run Homer
+^C           quit Homer when running
+homer help   this help page
+
+DOCUMENT
+
+if ARGV.include?("init")
+	`rake homer:init`
+	puts "== Homer is now configured and ready to go. Run `homer run` to get started."
+elsif ARGV.include?("run")
+	if Homepage.table_exists?
+		Sinatra::Application.run!
+	else
+		puts "== Homer can't find the database! This probably means you haven't created it yet. Run `homer init` to set up."
+	end
+elsif (ARGV.blank? || ARGV.include?("help"))
+	puts HELP
+else
+	puts "== Homer doesn't understand `#{ARGV}.` Try `homer help` for available options"
+end
