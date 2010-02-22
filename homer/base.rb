@@ -1,7 +1,7 @@
 require 'erb'
 require 'ftools'
 require 'open-uri'
-require 'activerecord'
+require 'active_record'
 require 'feedme' #for atom/rss parsing
 
 
