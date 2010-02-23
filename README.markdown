@@ -12,7 +12,14 @@ All blogware provides at least one form of syndication: RSS, Atom, etc. Let's pa
 
 ## Installation & Usage
 
-Homer is now ready for soft alpha testing. To install, first make sure you have the following gems installed: sinatra, activerecord, sqlite3-ruby, [feedme](http://rubygems.org/gems/feedme), then
+Homer is now ready for soft alpha testing. To install, first make sure you have the following gems installed: 
+
+* sinatra >= 0.9, < 1 
+* active_record >= 2.3.4, < 3.0
+* sqlite3-ruby 
+* [feedme](http://rubygems.org/gems/feedme)
+
+then
 
 * `git clone git://github.com/ashaw/homer.git`
 * `cd homer/bin`
