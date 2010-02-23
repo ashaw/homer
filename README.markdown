@@ -14,11 +14,11 @@ All blogware provides at least one form of syndication: RSS, Atom, etc. Let's pa
 
 Homer is now ready for soft alpha testing. To install, first make sure you have the following gems installed: sinatra, activerecord, sqlite3-ruby, [feedme](http://rubygems.org/gems/feedme), then
 
-`git clone git://github.com/ashaw/homer.git`
-`cd homer/bin`
-`ruby homer init` (to set up SQLite db)
-`ruby homer run`
-open a browser to http://localhost:4567
+* `git clone git://github.com/ashaw/homer.git`
+* `cd homer/bin`
+* `ruby homer init` (to set up SQLite db)
+* `ruby homer run`
+* open a browser to http://localhost:4567
 
 Bugs & suggestions welcome via the [Issues](http://github.com/ashaw/homer/issues) area. Blog post and screencast on usage forthcoming. 
 
