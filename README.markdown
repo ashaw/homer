@@ -10,13 +10,17 @@ Blogware is good for storing content and metadata. All blogware keeps track of t
 
 All blogware provides at least one form of syndication: RSS, Atom, etc. Let's parse those feeds, and create lists of stories so you can select where each story should live on a hierarchical front page. Let's also let you style your front page however you want, create the number of "slots" you want, and let Homer figure out how to assign your stories to slots. Let's be blogware-agnostic, and even friendly to multiple backends and sources. Let's have sensible defaults, but total customization.
 
-## But really, how?
+## Installation & Usage
 
-Ruby, Sinatra, Hpricot via FeedMe, ActiveRecord, ERB
+Homer is now ready for soft alpha testing. To install, first make sure you have the following gems installed: sinatra, activerecord, sqlite3-ruby, [feedme](http://rubygems.org/gems/feedme), then
 
-## Note
+`git clone git://github.com/ashaw/homer.git`
+`cd homer/bin`
+`ruby homer init` (to set up SQLite db)
+`ruby homer run`
+open a browser to http://localhost:4567
 
-Don't download or play with this yet! It's only half built, and nowhere near ready design or code-wise. I will blog about it when it is. Eventually I would like to release this as a gem.
+Bugs & suggestions welcome via the [Issues](http://github.com/ashaw/homer/issues) area. Blog post and screencast on usage forthcoming. 
 
 ## License (MIT)
 
