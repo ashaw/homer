@@ -64,7 +64,13 @@ get '/homepage/:hpid/preview' do
 	@title = "Homer | Previewing #{@homepage.title}"
 	filename = @homepage.title.dirify
 	template = "#{SINATRA_ROOT}/templates/#{filename}.erb"
-	f = File.open(template)
+	
+	begin
+		f = File.open(template)
+			rescue Errno::ENOENT 
+				raise "You need to save a fresh template before you can preview it! <a href=\"javascript:window.close()\">Close</a>."	
+	end
+	
 	@s = ""
 		f.each do |line|
 			@s << ERB.new(line).result(binding) rescue nil
@@ -277,12 +283,6 @@ end
 
 
 ##
-# deleting stuff
-##
-
-
-
-##
 # tidying up stuff
 ##
 
@@ -295,5 +295,5 @@ error do
 end
 
 error ActiveRecord::StatementInvalid do
-	erb "<div class=\"error\">Homer can't find the database! This probably means you haven't created it yet. Quit homer and run <code>homer init</code> to get started.</div>"
+	erb "<div class=\"error\">Homer can't find the database! This probably means you haven't created it yet or have incorrect permissions set. Quit homer and run <code>homer init</code> to get started.</div>"
 end

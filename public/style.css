@@ -75,7 +75,6 @@ a:hover {
 	float:left;
 	}
 #middle {
-	width:100%;
 	overflow:hidden;
 	clear:left;
 	}
@@ -152,6 +151,7 @@ ul.manage_top_menu li {
 #feeds_menu {
 	background:#fff;
 	color:#000;
+	margin:5px;
 	padding:30px;
 	display:none;
 	-moz-box-shadow:0 0 10px #cecece;
@@ -171,6 +171,7 @@ ul.feeds_menu li {
 /* buttons */
 input[type=submit] {
 	border: 1px solid #cecece;
+	margin:5px;
 	padding:5px;
 	color:#000;
 	background:#f0f0f0;
@@ -205,7 +206,7 @@ input[type=text],textarea {
 
 input.permalink {
 	float:right;
-	margin-right:57px;
+	margin-right:80px;
 }
 
 /* manage homepage workspace */
@@ -238,13 +239,14 @@ input.permalink {
 	}
 .story_body {
 	display:none;
+	overflow:auto;
 	}
 .story_body textarea {
 	height:300px;
 	width:500px;
 	font-size:11px;
 	float:right;
-	margin-right:57px;
+	margin-right:80px;
 	}
 .story_body text {
 	width:500px;

@@ -1,6 +1,8 @@
+<% now = Time.now.to_i %>
+
 <script type="text/javascript">
 $(document).ready(function() {
-		$("#story_list ul#fresh_stories li a.showbody").each(function() {
+		$("#story_list ul#fresh_stories li.<%= now %> a.showbody").each(function() {
 			$(this).click(function() {
 				$(this).next(".story_body").toggle();
 				return false;
@@ -26,7 +28,7 @@ $(document).ready(function() {
 	<% end %>
 		
 	
-	<li>
+	<li class="<%= now %>">
 		<select name="story[<%= @feed.id %><%= index %>][slot_id]">
 			<option value=""></option>
 			<% @slots.each do |slot| %>

@@ -23,8 +23,8 @@ then
 
 * `git clone git://github.com/ashaw/homer.git`
 * `cd homer/bin`
-* `ruby homer init` (to set up SQLite db)
-* `ruby homer run`
+* `./homer init` (to set up SQLite db)
+* `./homer run`
 * open a browser to http://localhost:4567
 
 Bugs & suggestions welcome via the [Issues](http://github.com/ashaw/homer/issues) area. Blog post and screencast on usage forthcoming. 
