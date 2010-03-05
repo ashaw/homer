@@ -19,6 +19,9 @@
 </div>
 
 <div id="middle">
+<% if @error %>
+	<div class="error">Error: <%= @error %></div>
+<% end %>
 <%= yield %>
 </div>
 

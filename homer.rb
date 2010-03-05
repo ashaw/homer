@@ -68,7 +68,7 @@ get '/homepage/:hpid/preview' do
 	begin
 		f = File.open(template)
 			rescue Errno::ENOENT 
-				raise "You need to save a fresh template before you can preview it! <a href=\"javascript:window.close()\">Close</a>."	
+				raise "You need to save a fresh template before you can preview it! <a href=\"javascript:window.close()\">close</a>."	
 	end
 	
 	@s = ""
@@ -133,7 +133,11 @@ post '/feed/new' do
 	@feed = Feed.new(params[:feed])
 	
 	if @feed.save
-		redirect '/'
+			redirect '/'
+		else
+			@title = "Error!"
+			@errors = @feed.errors
+			erb :db_error
 	end
 	
 end

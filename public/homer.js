@@ -61,5 +61,10 @@ $(document).ready(function() {
 			window.location.replace(this.attr('href'));
 		return false;
 	});
+	
+	//OK, I'll go back
+	$("input.error_accept").click(function() {
+		history.go(-1);
+	});
 
 }); //dom ready

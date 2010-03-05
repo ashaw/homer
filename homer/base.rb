@@ -166,17 +166,59 @@ end
 class Homepage < ActiveRecord::Base
 	has_and_belongs_to_many :feeds
 	has_many :slots, :dependent => :destroy
+	
+	validates_presence_of :title
+	validates_presence_of :path
+	
+	before_create :check_path
+	
+	#validate homepage publish path
+	def check_path
+		path = self.path
+		dir = path.match(/^(.+)\//)[0] # foo/bar/index.html -> foo/bar/baz/
+		me = ENV['user']
+		begin
+			if File::exists?(path)
+				raise 'There\'s already a file in that location'
+			end
+			Dir.entries(dir)
+				rescue Errno::ENOENT
+					Dir.mkdir(dir)
+					FileUtils.chown_R me, dir
+					rescue
+						raise 'There were permissions errors in setting up that path or the path is malformed.'
+		end
+	end
 
 end
 
 class Feed < ActiveRecord::Base
 	has_many :stories
 	has_and_belongs_to_many :homepages
+	
+	validates_presence_of :title
+	validates_presence_of :url
+	validate :url_format
+	
+	# validate url format
+  # courtesy http://actsasblog.wordpress.com/2006/10/16/url-validation-in-rubyrails/
+  def url_format
+		begin
+			uri = URI.parse(url)
+			if uri.class != URI::HTTP
+				errors.add(:url, '- Make sure your feed url starts with http://')
+			end
+			rescue URI::InvalidURIError
+				errors.add(:url, '- that doesn\'t look like a valid url.')
+			end
+		end
 end
 
 class Slot < ActiveRecord::Base
 	has_one :story
 	belongs_to :homepage
+	
+	validates_presence_of :label
 end
 
 class Story < ActiveRecord::Base

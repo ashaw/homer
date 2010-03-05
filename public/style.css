@@ -294,8 +294,18 @@ h3.template_root {
 code {
 	font-family:Monaco,Geneva,"Bitstream Vera Sans Mono",monospace;
 	}
+
+/* error messages */
 .error {
 	color:#660000;
 	background:#FFEEEE;
 	padding:15px;
+	border-bottom:1px solid #cecece;
+}
+.error h1 {
+	font-weight:bold;
+}
+input.error_accept {
+	margin-top:10px;
+	width:100px;
 }
