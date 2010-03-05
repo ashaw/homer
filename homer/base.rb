@@ -175,16 +175,18 @@ class Homepage < ActiveRecord::Base
 	#validate homepage publish path
 	def check_path
 		path = self.path
-		dir = path.match(/^(.+)\//)[0] # foo/bar/index.html -> foo/bar/baz/
+		dir = path.match(/^(.+)\//)[0] # foo/bar/index.html -> foo/bar/
 		me = ENV['user']
 		begin
 			if File::exists?(path)
 				raise 'There\'s already a file in that location'
 			end
-			Dir.entries(dir)
+		end
+		begin
+			Dir.entries(dir) #can i get a list of files in this location
 				rescue Errno::ENOENT
-					Dir.mkdir(dir)
-					FileUtils.chown_R me, dir
+					Dir.mkdir(dir) #then i can make a dir here
+					FileUtils.chown_R me, me, dir
 					rescue
 						raise 'There were permissions errors in setting up that path or the path is malformed.'
 		end
