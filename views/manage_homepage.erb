@@ -14,7 +14,7 @@
 			<form method="post" action="/hpfeed/new">
 			<input type="hidden" name="homepage_feed[homepage_id]" value="<%= @homepage.id %>">
 			<li>
-			<% @feeds.each do |feed| %>
+			<% @feeds.reject{|f| f if @hpfeeds && @hpfeeds.include?(f) }.each do |feed| %>
 				<li><input type="checkbox" name="homepage_feed[feed_ids][]" value="<%= feed.id %>"> <%= feed.title %></li>
 			<% end %>
 			<li class="submit"><input name="commit" type="submit" value="Add" /></li>
@@ -28,7 +28,7 @@
 				<li><input type="checkbox" name="homepage_feed[feed_ids][]" value="<%= feed.id %>"> <%= feed.title %></li>
 				<% end %>
 			<% end %>
-			<li class="submit"><input name="commit" type="submit" value="Remove" class="destroy" /></li>
+			<% if @hpfeeds && @hpfeeds.length > 0 %><li class="submit"><input name="commit" type="submit" value="Remove" class="destroy" /></li><% end %>
 			</form>
 		</ul>
 	</div>
@@ -47,7 +47,7 @@
 			<% @homepage.slots.each do |slot| %>
 				<li><input type="checkbox" name="homepage_slot[slot_ids][]" value="<%= slot.id %>"> <%= slot.label %></li>
 			<% end %>
-			<li class="submit"><input name="commit" type="submit" value="Remove" class="destroy" /></li>
+			<% if @homepage.slots.length > 0 %><li class="submit"><input name="commit" type="submit" value="Remove" class="destroy" /></li><% end %>
 			</form>
 		</ul>
 		</div>

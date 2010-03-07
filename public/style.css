@@ -88,18 +88,35 @@ img.logo:hover {
 	/*border-left:2px solid #000; */
 	}
 
-/* home */
+/* home & base-level object create */
 
-#home_menus .list {
+#home_menus .list, #home_create_form {
 	float:left;
 	padding-right:20px;
 	width:350px;
 	margin-bottom:20px;
 	}
-#home_menus .list ul li {
+#home_menus .list ul li, #home_create_form ul li {
 	padding-bottom:8px;
 	border-top:1px solid #cecece;
 	}
+#home_create_form {
+	width:960px;
+}
+#home_create_form ul li {
+	clear:right;
+	height:35px;
+}
+#home_create_form input[type=text] {
+	width:500px;
+	height:20px;
+	float:right;
+}
+#home_create_form input[type=submit] {
+	margin-top:10px;
+	width:100px;
+}
+
 
 /* ui elements */
 

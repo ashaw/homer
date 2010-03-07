@@ -1,8 +1,5 @@
-# Homer 0.1
+# Homer makes Homepages
 # by Al Shaw
-
-# sudo gem install shotgun, then
-# shotgun ./homer.rb to reload on every request
 
 require 'rubygems'
 require 'sinatra'
@@ -103,7 +100,9 @@ post '/homepage/:hpid/save' do
 	if @homepage.update_attributes(params[:homepage])
 			redirect '/'
 	else
-		"error. try again?"
+			@title = "Error!"
+			@errors = @homepage.errors
+			erb :db_error
 	end
 end
 
@@ -120,6 +119,10 @@ post '/homepage/new' do
 	
 	if @homepage.save
 		redirect '/'
+	else
+			@title = "Error!"
+			@errors = @homepage.errors
+			erb :db_error
 	end
 end
 
@@ -134,7 +137,7 @@ post '/feed/new' do
 	
 	if @feed.save
 			redirect '/'
-		else
+	else
 			@title = "Error!"
 			@errors = @feed.errors
 			erb :db_error
@@ -156,7 +159,9 @@ post '/feed/:fid/save' do
 	if @feed.update_attributes(params[:feed])
 			redirect '/'
 	else
-		"error. try again?"
+			@title = "Error!"
+			@errors = @feed.errors
+			erb :db_error
 	end
 end
 
@@ -199,6 +204,10 @@ post '/hpslot/new' do
 	
 	if @slot.save
 		redirect back
+	else
+			@title = "Error!"
+			@errors = @slot.errors
+			erb :db_error
 	end
 end
 
@@ -291,11 +300,15 @@ end
 ##
 
 not_found do
-	erb '<div class="error">404. go <a href="/">home(r)</a></div>'
+	msg = "404. go <a href=\"/\">home(r)</a>"
+	error = Homer.error_wrapper(msg)
+	
+	erb error
 end
 
 error do
-	erb "<div class=\"error\">Error: " + request.env['sinatra.error'] + "</div>"
+	error = Homer.error_wrapper(request.env['sinatra.error'])
+	erb error
 end
 
 error ActiveRecord::StatementInvalid do

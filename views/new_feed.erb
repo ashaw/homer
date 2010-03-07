@@ -1,7 +1,10 @@
 <h2>Add a feed</h2>
-
+<div id="home_create_form">
  	<form action="/feed/new" method="post">
-      <p>title <input id="title" name="feed[title]" size="30" type="text" /></p>
-      <p>url <input id="url" name="feed[url]" size="30" type="text" /></p>
+ 	<ul>
+      <li>Title <input id="title" name="feed[title]" size="30" type="text" /></li>
+      <li>URL <input id="url" name="feed[url]" size="30" type="text" /></li>
       <input name="commit" type="submit" value="Create" />
+	</ul>
 	</form>
+</div>

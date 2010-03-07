@@ -8,7 +8,7 @@ require 'feedme' #for atom/rss parsing
 class Homer
 
 	def self.version
-		'0.1'
+		'0.1.2'
 	end
 		
 	def self.get_feed(url)
@@ -129,6 +129,18 @@ class Homer
 		f.close
 	end
   
+	def self.error_wrapper(msg)
+	error = <<DOCUMENT
+<div class="error">
+	<h1>Error</h1>
+	<ul>
+		<li>#{msg}</li>
+	</ul>
+</div>
+<input class="error_accept" type="submit" value="OK!">
+DOCUMENT
+	end
+
 end
 
 # Ho is for templating in Homer
@@ -175,7 +187,7 @@ class Homepage < ActiveRecord::Base
 	#validate homepage publish path
 	def check_path
 		path = self.path
-		dir = path.match(/^(.+)\//)[0] # foo/bar/index.html -> foo/bar/
+		dir = path.match(/^(.+)\//)[0] # /foo/bar/index.html -> /foo/bar/
 		me = ENV['user']
 		begin
 			if File::exists?(path)
@@ -183,7 +195,7 @@ class Homepage < ActiveRecord::Base
 			end
 		end
 		begin
-			Dir.entries(dir) #can i get a list of files in this location
+			Dir.entries(dir) #can i get a list of files in this location?
 				rescue Errno::ENOENT
 					Dir.mkdir(dir) #then i can make a dir here
 					FileUtils.chown_R me, me, dir
@@ -200,20 +212,32 @@ class Feed < ActiveRecord::Base
 	
 	validates_presence_of :title
 	validates_presence_of :url
-	validate :url_format
+	validate :url_is_valid_feed
 	
-	# validate url format
-  # courtesy http://actsasblog.wordpress.com/2006/10/16/url-validation-in-rubyrails/
-  def url_format
+  # validate url format, then check to see if it is a valid URL, and valid XML feed
+  # based on http://actsasblog.wordpress.com/2006/10/16/url-validation-in-rubyrails/
+  def url_is_valid_feed
 		begin
 			uri = URI.parse(url)
 			if uri.class != URI::HTTP
 				errors.add(:url, '- Make sure your feed url starts with http://')
-			end
-			rescue URI::InvalidURIError
+			
+			else #should know the url is well-formed now, and can check for valid url and valid xml
+					begin
+					u = open(uri)
+						rescue OpenURI::HTTPError
+							raise "There's nothing at that feed URL. Maybe you mistyped it?"
+					end
+					if u.content_type.match(/xml/).nil?
+						errors.add(:url, '- That does not look like a valid XML, RSS or ATOM feed.')
+						# at this point, maybe we should crawl the page for autodetect tags and make a suggestion?
+
+					end
+			end #otherwise let's say why this is a fail
+			rescue URI::InvalidURIError 
 				errors.add(:url, '- that doesn\'t look like a valid url.')
-			end
 		end
+	end		
 end
 
 class Slot < ActiveRecord::Base

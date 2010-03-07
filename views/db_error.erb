@@ -1,7 +1,9 @@
 <div class="error">
 	<h1>Error</h1>
+	<ul>
 	<% @errors.each_full do |error| %>
 		<li><%= error %></li>
 	<% end %>
+	</ul>
 </div>
 <input class="error_accept" type="submit" value="OK!">
