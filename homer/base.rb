@@ -20,19 +20,21 @@ class Homer
 	# boilerplate template code
 	
 	def self.template_top_wrapper(homepage)
-		top = <<-DOCUMENT
-<!DOCTYPE html>
+ top = <<-DOCUMENT
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+            "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-			<title><%= @homepage.title %></title>
-			</head>
+ <head>
+ <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+ <title><%= @homepage.title %></title>
+ </head>
 		
-			<body>
-				<div id="head">
-					<h1><%= @homepage.title %></h1>
-				</div>
-				<div id="mid">
+ <body>
+ <div id="head">
+  <h1><%= @homepage.title %></h1>
+ </div>
+ <div id="mid">
 		DOCUMENT
 		
 		ERB::Util::h(top)
@@ -46,11 +48,13 @@ class Homer
 			label_instance_var = label.dirify.gsub(/^(\d)/,'_\1') #numbers can't start instance vars
 
 			wrapped_slot = <<-DOCUMENT
-				<div id="#{label.dirify}" class="slot">
-				<%  @#{label_instance_var.dirify} = Ho.new(@homepage,'#{label}') %>
-							<h2><a href="<%= @#{label_instance_var}.url %>"><%= @#{label_instance_var}.title %></a></h2>
-							<p><%= @#{label_instance_var}.body %></p>
-				</div>
+ 
+ <div id="#{label.dirify}" class="slot">
+  <%  @#{label_instance_var.dirify} = Ho.new(@homepage,'#{label}') %>
+  <h2><a href="<%= @#{label_instance_var}.url %>"><%= @#{label_instance_var}.title %></a></h2>
+  <p><%= @#{label_instance_var}.body %></p>
+ </div>
+			
 			DOCUMENT
 			wrapped_slots << ERB::Util::h(wrapped_slot)
 		end
@@ -59,11 +63,12 @@ class Homer
 	
 	def self.template_bottom_wrapper
 		bottom = <<-DOCUMENT
-				</div>
-				<div id="foot">
-				</div>
-			</body>			
-		</html>
+ 
+  </div>
+  <div id="foot">
+  </div>
+ </body>			
+</html>
 		DOCUMENT
 		
 		ERB::Util::h(bottom)
@@ -185,22 +190,14 @@ class Homepage < ActiveRecord::Base
 	before_create :check_path
 	
 	#validate homepage publish path
+	#todo, make this more comprehensive
 	def check_path
 		path = self.path
 		dir = path.match(/^(.+)\//)[0] # /foo/bar/index.html -> /foo/bar/
-		me = ENV['user']
 		begin
 			if File::exists?(path)
 				raise 'There\'s already a file in that location'
 			end
-		end
-		begin
-			Dir.entries(dir) #can i get a list of files in this location?
-				rescue Errno::ENOENT
-					Dir.mkdir(dir) #then i can make a dir here
-					FileUtils.chown_R me, me, dir
-					rescue
-						raise 'There were permissions errors in setting up that path or the path is malformed.'
 		end
 	end
 
